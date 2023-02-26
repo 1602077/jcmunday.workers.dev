@@ -1,4 +1,5 @@
 use serde_json::json;
+use worker::event;
 use worker::*;
 
 mod utils;

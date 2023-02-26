@@ -1,5 +1,5 @@
 [package]
-name = "hello"
+name = "me"
 version = "0.1.0"
 authors = ["jack"]
 edition = "2018"
@@ -11,15 +11,17 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
-cfg-if = "0.1.2"
-worker = "0.0.9"
-serde_json = "1.0.67"
-
-# The `console_error_panic_hook` crate provides better debugging of panics by
-# logging them with `console.error`. This is great for development, but requires
-# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
-# code size when deploying.
+cfg-if = "1.0.0"
 console_error_panic_hook = { version = "0.1.1", optional = true }
+datetime = "0.5.2"
+dotenv = "0.15.0"
+reqwest = { version = "0.11.14", features = ["json"] }
+serde = "1.0.152"
+serde_derive = "1.0.152"
+serde_json = "1.0.93"
+tokio = { version = "1.25.0", features = ["full"] }
+worker = "0.0.13"
+yew = { version = "0.20", features = ["csr"] }
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.
