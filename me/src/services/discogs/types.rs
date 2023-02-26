@@ -13,9 +13,14 @@ use serde_json::Value;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct CollectionResponse {
+pub struct Collection {
     // pub pagination: Pagination,
     pub releases: Vec<Release>,
+}
+impl std::fmt::Display for Collection {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "Collection: {:?}", self.releases)
+    }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -108,4 +113,3 @@ pub struct Artist {
     #[serde(rename = "resource_url")]
     pub resource_url: String,
 }
-

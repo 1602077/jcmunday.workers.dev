@@ -3,4 +3,3 @@
 wasm-pack.log
 build/
 dist/
-.env
