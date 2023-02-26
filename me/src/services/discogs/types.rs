@@ -1,15 +1,44 @@
-// use datetime::LocalDateTime;
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
 use serde_json::Value;
 
-// #[derive(Debug)]
-// struct Record {
-//     artist: String,
-//     title: String,
-//     pressed: String,
-//     date_added: LocalDateTime,
-// }
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Record {
+    artist: String,
+    album: String,
+    pressed: String,
+    date_added: String,
+}
+impl std::fmt::Display for Record {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:#?}", self)
+    }
+}
+impl Record {
+    pub fn from(mut c: Collection) -> Vec<Record> {
+        let mut records: Vec<Record> = Vec::with_capacity(c.releases.len());
+        for record in c.releases.iter_mut() {
+            records.push(Record {
+                artist: record.basic_information.artists[0].name.to_string(),
+                album: record.basic_information.title.to_string(),
+                pressed: record.basic_information.year.to_string(),
+                date_added: record.date_added.to_string(),
+            });
+        }
+        records
+    }
+}
+
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
+pub struct Records(pub Vec<Record>);
+impl std::fmt::Display for Records {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        for v in &self.0 {
+            write!(f, "{}\n", v)?;
+        }
+        Ok(())
+    }
+}
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -25,7 +54,7 @@ impl std::fmt::Display for Collection {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Pagination {
+struct Pagination {
     pub page: i64,
     pub pages: i64,
     #[serde(rename = "per_page")]
@@ -36,7 +65,7 @@ pub struct Pagination {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Urls {
+struct Urls {
     pub last: String,
     pub next: String,
 }

@@ -1,4 +1,4 @@
-use crate::services::discogs::types::Collection;
+use crate::services::discogs::types::{Collection, Record, Records};
 use reqwest;
 
 // Client interacts with the discogs API using a personal access token. This
@@ -39,7 +39,7 @@ impl Client {
         folder_id: i32,
         offset: i32,
         count: i32,
-    ) -> Result<Collection, Box<dyn std::error::Error>> {
+    ) -> Result<Records, Box<dyn std::error::Error>> {
         let collection_url = format! {
             "{}/users/{}/collection/folders/{}/releases?sort=added&sort_order=desc&page={}&per_page={}",
             self.discogs_url,
@@ -58,12 +58,10 @@ impl Client {
                 format! {"Discogs token={}", self.personal_token},
             )
             .send()
+            .await?
+            .json::<Collection>()
             .await?;
 
-        let body = &resp.json::<Collection>().await?;
-
-        // TODO: Parse to custom type & return
-
-        Ok(body.to_owned())
+        Ok(Records(Record::from(resp.clone())))
     }
 }

@@ -36,7 +36,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             );
 
             let vinyl = discogs_client
-                .get_collection(2233333, 1, 5)
+                .get_collection(2233333, 1, 10)
                 .await
                 .expect("expected a response");
 
