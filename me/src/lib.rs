@@ -24,26 +24,30 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     router
         .get("/", |_, _| Response::ok("hello jack"))
         .get_async("/music", |_req, ctx| async move {
-            let discogs_username = ctx.secret("DISCOGS_USERNAME")?.to_string();
-            let discogs_api_token = ctx.secret("DISCOGS_API_TOKEN")?.to_string();
+            let secret_discogs_username = ctx.secret("DISCOGS_USERNAME")?.to_string();
+            let secret_discogs_api_token = ctx.secret("DISCOGS_API_TOKEN")?.to_string();
 
             let discogs_client = discogs::Client::new(
                 reqwest::Client::new(),
                 "https://api.discogs.com".to_string(),
-                discogs_username.to_string(),
-                discogs_api_token,
+                secret_discogs_username.to_string(),
+                secret_discogs_api_token,
             );
 
+            let my_collection_id = 2233333;
+            let start_position = 1;
+            let num_records = 10;
+
             let vinyl = discogs_client
-                .get_collection(2233333, 1, 10)
+                .get_collection(my_collection_id, start_position, num_records)
                 .await
                 .expect("expected a response");
 
             Response::ok(vinyl.to_string().to_owned())
         })
         .get_async("/dev-time", |_, ctx| async move {
-            let waka_api_token = ctx.secret("WAKATIME_API_TOKEN")?.to_string();
-            let waka_client = waka::Client::new(reqwest::Client::new(), waka_api_token);
+            let secret_waka_api_token = ctx.secret("WAKATIME_API_TOKEN")?.to_string();
+            let waka_client = waka::Client::new(reqwest::Client::new(), secret_waka_api_token);
             let time = waka_client
                 .get_dev_time()
                 .await

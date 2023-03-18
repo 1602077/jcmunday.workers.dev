@@ -1,5 +1,5 @@
 [package]
-name = "me"
+name = "api"
 version = "0.1.0"
 authors = ["jack"]
 edition = "2018"
