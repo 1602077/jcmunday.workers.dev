@@ -1,6 +1,5 @@
 use crate::services::discogs::client as discogs;
 use crate::services::waka::client as waka;
-use worker::event;
 use worker::*;
 
 mod services;
@@ -20,11 +19,10 @@ fn log_request(req: &Request) {
 pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Response> {
     log_request(&req);
     utils::set_panic_hook();
-
-    let router = Router::new();
+    let router = worker::Router::new();
 
     router
-        .get("/", |_, _| Response::ok("hello jack!"))
+        .get("/", |_, _| Response::ok("hello jack"))
         .get_async("/music", |_req, ctx| async move {
             let discogs_username = ctx.secret("DISCOGS_USERNAME")?.to_string();
             let discogs_api_token = ctx.secret("DISCOGS_API_TOKEN")?.to_string();
