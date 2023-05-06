@@ -1,5 +1,10 @@
-use crate::services::discogs::types::{Collection, Record, Records};
 use reqwest;
+use secrecy::{ExposeSecret, Secret};
+
+use crate::{
+    config::DiscogSettings,
+    services::discogs::types::{Collection, Record, Records},
+};
 
 // Client interacts with the discogs API using a personal access token. This
 // is not meant to be a fully fledged Discogs client: it does NOT go through
@@ -7,28 +12,15 @@ use reqwest;
 // collection for display.
 pub struct Client {
     http: reqwest::Client,
-    // discogs_url is the endpoint for the discogs API.
-    discogs_url: String,
-    // username is your discogs username.
-    username: String,
-    // personal_token is a personal access token used to authorise requests
-    // for username.
-    personal_token: String,
+    config: DiscogSettings,
 }
 
 impl Client {
-    pub fn new(
-        http: reqwest::Client,
-        discogs_url: String,
-        username: String,
-        personal_token: String,
-    ) -> Self {
-        Self {
-            http,
-            discogs_url,
-            username,
-            personal_token,
-        }
+    pub fn new(config: DiscogSettings) -> Self {
+        // todo!("connection pool")
+        let http = reqwest::Client::new();
+
+        Self { http, config }
     }
 
     // get_collection retrieves count (N) most recent records added to a Discogs
@@ -43,7 +35,7 @@ impl Client {
         let collection_url = format! {
             "{}/users/{}/collection/folders/{}/releases?sort=added&sort_order=desc&page={}&per_page={}",
             self.discogs_url,
-            self.username,
+            self.config.username.expose_secret()
             folder_id.to_string(),
             offset.to_string(),
             count.to_string(),
@@ -55,7 +47,7 @@ impl Client {
             .header(reqwest::header::USER_AGENT, "curl/7.84.0")
             .header(
                 "Authorization",
-                format! {"Discogs token={}", self.personal_token},
+                format! {"Discogs token={}", self.config.personal_token.expose_secret()},
             )
             .send()
             .await?

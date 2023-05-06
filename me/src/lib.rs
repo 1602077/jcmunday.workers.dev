@@ -1,9 +1,13 @@
-use crate::services::discogs::client as discogs;
-use crate::services::waka::client as waka;
-use worker::*;
-
+mod config;
 mod services;
 mod utils;
+
+use worker::*;
+
+use crate::{
+    config::get_config,
+    services::{discogs::client as discogs, waka::client as waka},
+};
 
 fn log_request(req: &Request) {
     console_log!(
@@ -19,25 +23,17 @@ fn log_request(req: &Request) {
 pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Response> {
     log_request(&req);
     utils::set_panic_hook();
+
+    let config = get_config(_ctx)?;
     let router = worker::Router::new();
 
     router
         .get("/", |_, _| Response::ok("hello jack"))
         .get_async("/music", |_req, ctx| async move {
-            let secret_discogs_username = ctx.secret("DISCOGS_USERNAME")?.to_string();
-            let secret_discogs_api_token = ctx.secret("DISCOGS_API_TOKEN")?.to_string();
-
-            let discogs_client = discogs::Client::new(
-                reqwest::Client::new(),
-                "https://api.discogs.com".to_string(),
-                secret_discogs_username.to_string(),
-                secret_discogs_api_token,
-            );
-
+            let discogs_client = discogs::Client::new(config.discogs);
             let my_collection_id = 2233333;
             let start_position = 1;
             let num_records = 10;
-
             let vinyl = discogs_client
                 .get_collection(my_collection_id, start_position, num_records)
                 .await
@@ -46,8 +42,8 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             Response::ok(vinyl.to_string().to_owned())
         })
         .get_async("/dev-time", |_, ctx| async move {
-            let secret_waka_api_token = ctx.secret("WAKATIME_API_TOKEN")?.to_string();
-            let waka_client = waka::Client::new(reqwest::Client::new(), secret_waka_api_token);
+            let waka_client = waka::Client::new(config.wakatime);
+
             let time = waka_client
                 .get_dev_time()
                 .await
