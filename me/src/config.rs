@@ -1,3 +1,5 @@
+// TODO (jack): config management using a configuration file for non secrets.
+
 use secrecy::Secret;
 
 #[derive(Debug, serde::Deserialize, Clone)]
