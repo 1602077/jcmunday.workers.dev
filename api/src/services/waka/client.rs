@@ -1,9 +1,10 @@
-use secrecy::{ExposeSecret, Secret};
+use secrecy::ExposeSecret;
 
 use crate::config::WakatimeSettings;
 
 // Client interacts with the wakatime API. Once again I have not bothered with
 // OAuth and am instead using a personal access token.
+#[derive(Clone)]
 pub struct Client {
     http: reqwest::Client,
     config: WakatimeSettings,
@@ -13,7 +14,10 @@ impl Client {
     pub fn new(config: WakatimeSettings) -> Self {
         let http = reqwest::Client::new();
 
-        Self { http, config }
+        Self {
+            http,
+            config: config.clone(),
+        }
     }
 
     // get_dev_time returns stats on development activities over the last 7 days.

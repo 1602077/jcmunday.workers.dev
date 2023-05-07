@@ -1,5 +1,5 @@
 use reqwest;
-use secrecy::{ExposeSecret, Secret};
+use secrecy::ExposeSecret;
 
 use crate::{
     config::DiscogSettings,
@@ -10,6 +10,7 @@ use crate::{
 // is not meant to be a fully fledged Discogs client: it does NOT go through
 // an OAuth flow. This only serves as a quick and dirty way to pull my
 // collection for display.
+#[derive(Clone)]
 pub struct Client {
     http: reqwest::Client,
     config: DiscogSettings,
@@ -20,7 +21,10 @@ impl Client {
         // todo!("connection pool")
         let http = reqwest::Client::new();
 
-        Self { http, config }
+        Self {
+            http,
+            config: config.clone(),
+        }
     }
 
     // get_collection retrieves count (N) most recent records added to a Discogs
@@ -28,14 +32,14 @@ impl Client {
     // worker to show the most recent records I have added to my collection.
     pub async fn get_collection(
         self,
-        folder_id: i32,
-        offset: i32,
-        count: i32,
+        folder_id: &i32,
+        offset: &i32,
+        count: &i32,
     ) -> Result<Records, Box<dyn std::error::Error>> {
         let collection_url = format! {
             "{}/users/{}/collection/folders/{}/releases?sort=added&sort_order=desc&page={}&per_page={}",
-            self.discogs_url,
-            self.config.username.expose_secret()
+            self.config.url,
+            self.config.username.expose_secret(),
             folder_id.to_string(),
             offset.to_string(),
             count.to_string(),
