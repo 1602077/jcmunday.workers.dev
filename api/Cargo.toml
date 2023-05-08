@@ -2,7 +2,10 @@
 name = "api"
 version = "0.1.0"
 authors = ["jcmunday"]
-edition = "2018"
+description = "api backend for personal portfolio"
+repository = "https://github.com/1602077/jcmunday.workers.dev"
+license = "MIT"
+edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -15,12 +18,12 @@ cfg-if = "1.0.0"
 config = "0.13.3"
 console_error_panic_hook = { version = "0.1.1", optional = true }
 json = "0.12.4"
-reqwest = { version = "0.11.14", features = ["json"] }
+reqwest = { version = "0.11.17", features = ["json"] }
 secrecy = { version = "0.8.0", features = ["serde"] }
-serde = { version = "1.0.160", features = [ "derive" ] }
+serde = { version = "1.0.160", features = [ "derive", "serde_derive" ] }
 serde_derive = "1.0.162"
 serde_json = "1.0.96"
-worker = "0.0.13"
+worker = "0.0.16"
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.
