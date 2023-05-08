@@ -1051,9 +1051,9 @@ dependencies = [
 
 [[package]]
 name = "serde-wasm-bindgen"
-version = "0.5.0"
+version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f3b143e2833c57ab9ad3ea280d21fd34e285a42837aeb0ee301f4f41890fa00e"
+checksum = "e3b4c031cd0d9014307d82b8abf653c0290fbdaeb4c02d00c63cf52f728628bf"
 dependencies = [
  "js-sys",
  "serde",
@@ -1368,6 +1368,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31f8dcbc21f30d9b8f2ea926ecb58f6b91192c17e9d33594b3df58b2007ca53b"
 dependencies = [
  "cfg-if",
+ "serde",
+ "serde_json",
  "wasm-bindgen-macro",
 ]
 
@@ -1630,9 +1632,9 @@ dependencies = [
 
 [[package]]
 name = "worker"
-version = "0.0.16"
+version = "0.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "301c77ead87587225c6f58104de6c9046afef597e7d39d36cba2640b5af1046a"
+checksum = "f1318524ba8c0302553ef007c5437ff51589f144b664ec5fbdd090f904b05a3c"
 dependencies = [
  "async-trait",
  "chrono",
@@ -1658,13 +1660,12 @@ dependencies = [
 
 [[package]]
 name = "worker-kv"
-version = "0.6.0"
+version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d4b9fe1a87b7aef252fceb4f30bf6303036a5de329c81ccad9be9c35d1fdbc7"
+checksum = "682cbd728f179cc810b2ab77a2534da817b973e190ab184ab8efe1058b0dba84"
 dependencies = [
  "js-sys",
  "serde",
- "serde-wasm-bindgen",
  "serde_json",
  "thiserror",
  "wasm-bindgen",
@@ -1673,9 +1674,9 @@ dependencies = [
 
 [[package]]
 name = "worker-macros"
-version = "0.0.8"
+version = "0.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c86b080d7a6472a244fd1b5b1f36be3dc53942aef13e716724a4b74715708afc"
+checksum = "9c621e3ad64ad7699776c07e58bc2418506850349a77d64a9a57101dd3288258"
 dependencies = [
  "async-trait",
  "proc-macro2",
@@ -1689,9 +1690,9 @@ dependencies = [
 
 [[package]]
 name = "worker-sys"
-version = "0.0.8"
+version = "0.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b842e2ac2871c2d83e50ce8e8844fc3893666d1c16825b809505de6506ad4487"
+checksum = "90f33ccde16fd5f0e0d1e8b260e7f8fdbb68f56bd5d115050bf3e5ffef0d1671"
 dependencies = [
  "cfg-if",
  "js-sys",

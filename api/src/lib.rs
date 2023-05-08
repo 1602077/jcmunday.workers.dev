@@ -1,9 +1,10 @@
 mod config;
+mod routes;
 mod services;
 mod startup;
 mod utils;
 
-use worker::{Context, Env, Request, Response, Result, Router};
+use worker::{Context, Env, Request, Response, Result};
 
 use crate::{
     config::get_config,
@@ -18,10 +19,5 @@ pub async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
     let configuration = get_config().expect("failed to get config");
 
     let app = Application::build(configuration).await;
-
-    let router = Router::with_data(app);
-    router
-        .get("/", |_, _| Response::ok("hello jack"))
-        .run(req, env)
-        .await
+    app.run(req, env, _ctx).await
 }

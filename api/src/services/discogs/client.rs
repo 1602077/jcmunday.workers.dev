@@ -10,7 +10,7 @@ use crate::{
 // is not meant to be a fully fledged Discogs client: it does NOT go through
 // an OAuth flow. This only serves as a quick and dirty way to pull my
 // collection for display.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Client {
     http: reqwest::Client,
     config: DiscogSettings,

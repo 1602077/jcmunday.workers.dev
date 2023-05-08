@@ -18,7 +18,6 @@ pub struct DiscogSettings {
 #[derive(Debug, serde::Deserialize, Clone)]
 pub struct WakatimeSettings {
     pub url: String,
-    pub personal_token: Secret<String>,
 }
 
 pub fn get_config() -> Result<Settings, config::ConfigError> {
@@ -51,8 +50,6 @@ pub fn get_config() -> Result<Settings, config::ConfigError> {
 
     let wakatime = WakatimeSettings {
         url: "https://wakatime.com/api/v1/".to_string(),
-        // personal_token: waka_personal_token,
-        personal_token: Secret::new("xxx".to_string()),
     };
 
     Ok(Settings { discogs, wakatime })
