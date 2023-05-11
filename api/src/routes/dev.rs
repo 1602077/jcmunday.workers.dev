@@ -1,5 +1,4 @@
 use secrecy::Secret;
-use worker::console_log;
 
 use crate::startup::Application;
 
@@ -13,9 +12,9 @@ pub async fn get_dev_time(
             .to_string(),
     );
 
-    let waka_client = ctx.data.waka_client;
-
-    let time = waka_client
+    let time = ctx
+        .data
+        .waka_client
         .get_dev_time(personal_token)
         .await
         .expect("failed to get dev time");

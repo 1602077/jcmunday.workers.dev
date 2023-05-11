@@ -4,7 +4,6 @@ version = "0.1.0"
 authors = ["jcmunday"]
 description = "api backend for personal portfolio"
 repository = "https://github.com/1602077/jcmunday.workers.dev"
-license = "MIT"
 edition = "2021"
 
 [lib]
@@ -23,7 +22,7 @@ secrecy = { version = "0.8.0", features = ["serde"] }
 serde = { version = "1.0.160", features = [ "derive", "serde_derive" ] }
 serde_derive = "1.0.162"
 serde_json = "1.0.96"
-worker = "0.0.13"
+worker = "0.0.16"
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.

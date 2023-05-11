@@ -24,6 +24,7 @@ impl Record {
                 date_added: record.date_added.to_string(),
             });
         }
+
         records
     }
 }
