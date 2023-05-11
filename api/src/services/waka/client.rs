@@ -14,10 +14,7 @@ impl Client {
     pub fn new(config: WakatimeSettings) -> Self {
         let http = reqwest::Client::new();
 
-        Self {
-            http,
-            config: config.clone(),
-        }
+        Self { http, config }
     }
 
     // get_dev_time returns stats on development activities over the last 7 days.

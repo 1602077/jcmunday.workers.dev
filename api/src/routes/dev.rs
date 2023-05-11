@@ -24,5 +24,5 @@ pub async fn get_dev_time(
         time["data"]["human_readable_total"]
     };
 
-    worker::Response::ok(dev_time.to_string())
+    worker::Response::ok(dev_time)
 }

@@ -21,10 +21,7 @@ impl Client {
         // TODO: connection pool
         let http = reqwest::Client::new();
 
-        Self {
-            http,
-            config: config.clone(),
-        }
+        Self { http, config }
     }
 
     // get_collection retrieves count (N) most recent records added to a Discogs
@@ -55,7 +52,7 @@ impl Client {
             .json::<Collection>()
             .await?;
 
-        Ok(Records(Record::from(resp.clone())))
+        Ok(Records(Record::from(resp)))
     }
 }
 

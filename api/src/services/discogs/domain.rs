@@ -34,7 +34,7 @@ pub struct Records(pub Vec<Record>);
 impl std::fmt::Display for Records {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         for v in &self.0 {
-            write!(f, "{}\n", v)?;
+            writeln!(f, "{}", v)?;
         }
         Ok(())
     }
