@@ -1,6 +1,7 @@
 use secrecy::Secret;
 
-use crate::{services::discogs::CollectionRequest, startup::Application};
+use crate::services::discogs::CollectionRequest;
+use crate::startup::Application;
 
 pub async fn get_discogs_collection(
     _req: worker::Request,

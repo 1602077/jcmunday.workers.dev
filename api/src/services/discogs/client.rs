@@ -1,10 +1,8 @@
 use reqwest;
 use secrecy::{ExposeSecret, Secret};
 
-use crate::{
-    config::DiscogsSettings,
-    services::discogs::domain::{Collection, Record, Records},
-};
+use crate::config::DiscogsSettings;
+use crate::services::discogs::domain::{Collection, Record, Records};
 
 // Client interacts with the discogs API using a personal access token. This
 // is not meant to be a fully fledged Discogs client: it does NOT go through

@@ -1,11 +1,12 @@
 use worker::*;
 
-use crate::{
-    config::Settings,
-    routes::{dev::get_dev_time, health::health, music::get_discogs_collection},
-    services::{discogs::Client as DiscogsClient, waka::Client as WakaClient},
-    utils,
-};
+use crate::config::Settings;
+use crate::routes::dev::get_dev_time;
+use crate::routes::health::health;
+use crate::routes::music::get_discogs_collection;
+use crate::services::discogs::Client as DiscogsClient;
+use crate::services::waka::Client as WakaClient;
+use crate::utils;
 
 #[derive(Clone, Debug)]
 pub struct Application {
