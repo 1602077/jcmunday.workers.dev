@@ -1,22 +1,24 @@
-// TODO (jack): config management using a configuration file for non secrets.
-
-#[derive(Debug, serde::Deserialize, Clone)]
+#[derive(Debug, Clone)]
 pub struct Settings {
     pub discogs: DiscogsSettings,
     pub wakatime: WakatimeSettings,
 }
 
-#[derive(Debug, serde::Deserialize, Clone)]
+#[derive(Debug, Clone)]
 pub struct DiscogsSettings {
     pub url: String,
 }
 
-#[derive(Debug, serde::Deserialize, Clone)]
+#[derive(Debug, Clone)]
 pub struct WakatimeSettings {
     pub url: String,
 }
 
-pub fn get_config() -> Result<Settings, config::ConfigError> {
+/// get_config returns application level config.
+///
+/// Compiling to wasm prevents a more complicated management system using yaml
+/// files / environment variables as the filesystem is locked out.
+pub fn get_config() -> Settings {
     let discogs = DiscogsSettings {
         url: "https://api.discogs.com".to_string(),
     };
@@ -25,5 +27,5 @@ pub fn get_config() -> Result<Settings, config::ConfigError> {
         url: "https://wakatime.com/api/v1/".to_string(),
     };
 
-    Ok(Settings { discogs, wakatime })
+    Settings { discogs, wakatime }
 }

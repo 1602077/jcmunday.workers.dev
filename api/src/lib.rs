@@ -16,7 +16,7 @@ pub async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
     log_request(&req);
     utils::set_panic_hook();
 
-    let configuration = get_config().expect("failed to get config");
+    let configuration = get_config();
 
     let app = Application::build(configuration).await;
     app.run(req, env, _ctx).await
