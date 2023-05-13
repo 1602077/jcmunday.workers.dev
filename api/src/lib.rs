@@ -1,8 +1,8 @@
-mod config;
-mod routes;
-mod services;
-mod startup;
-mod utils;
+pub mod config;
+pub mod routes;
+pub mod services;
+pub mod startup;
+pub mod utils;
 
 use worker::{Context, Env, Request, Response, Result};
 
