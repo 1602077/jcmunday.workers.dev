@@ -38,15 +38,10 @@ impl Client {
         match resp.status() {
             reqwest::StatusCode::OK => {
                 let jj = resp.text().await?;
+                // TODO: a bit lazy here
                 Ok(json::parse(&jj).unwrap())
             }
             _ => Err("request failed".into()),
         }
-        // // TODO: error handling on a 500
-        // .text()
-        // .await?;
-
-        // // TODO: a bit lazy here
-        // Ok(json::parse(&resp).unwrap())
     }
 }

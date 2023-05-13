@@ -3,10 +3,10 @@ use serde_json::Value;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Record {
-    artist: String,
-    album: String,
-    pressed: String,
-    date_added: String,
+    pub artist: String,
+    pub album: String,
+    pub pressed: String,
+    pub date_added: String,
 }
 impl std::fmt::Display for Record {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
